@@ -23,6 +23,7 @@ from fastapi.staticfiles import StaticFiles
 
 from backend.agents.pipeline import OmniBridgePipeline
 from backend.schemas.incident import IncidentExecutionPayload
+from backend.skills.registry import SkillRegistry, execute_pre_processing, execute_post_processing
 
 # ── Structured JSON logging ────────────────────────────────────────────────────
 logging.basicConfig(
@@ -97,11 +98,24 @@ async def ingest_incident(
         audio_mime = audio.content_type or "audio/webm"
 
     try:
+        # ── Dynamic Skill Loading (Optional) ──
+        skills_header = request.headers.get("X-Omni-Skills", "")
+        if skills_header:
+            skill_list = [s.strip() for s in skills_header.split(",") if s.strip()]
+            SkillRegistry.load_skills(skill_list)
+            logger.info(f"Skills loaded for request {request_id}: {skill_list}")
+
+        # ── Pre-processing Skills ──
+        processed_text, _ = await execute_pre_processing(text)
+
         payload = await pipeline.run(
-            text_input=text,
+            text_input=processed_text,
             audio_bytes=audio_bytes,
             audio_mime=audio_mime,
         )
+
+        # ── Post-processing Skills ──
+        payload = await execute_post_processing(payload)
     except ValueError as ve:
         raise HTTPException(status_code=422, detail=str(ve))
     except Exception as exc:

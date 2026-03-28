@@ -86,6 +86,16 @@ Example: 'Patient John D., 45yr male, presenting with chest pain radiating to le
           </p>
         </div>
 
+        <!-- Skill Configuration (Optional) -->
+        <div class="skill-config">
+          <label class="skill-label">
+            <input type="checkbox" id="skill-security"> Security & Governance (PII)
+          </label>
+          <label class="skill-label">
+            <input type="checkbox" id="skill-memory"> Memory Management
+          </label>
+        </div>
+
         <!-- Submit -->
         <button id="submit-btn" onclick="submitIncident()" aria-label="Process incident">
           <span id="submit-label">&#9654; PROCESS INCIDENT</span>
@@ -127,18 +137,38 @@ Example: 'Patient John D., 45yr male, presenting with chest pain radiating to le
       </div>
       <div class="panel-body">
 
-        <!-- DEFCON indicator (hidden until result) -->
-        <div class="defcon-bar" id="defcon-bar" data-level="" style="display:none">
-          <div class="defcon-dot"></div>
-          <span class="defcon-label">URGENCY LEVEL</span>
-          <span class="defcon-value" id="defcon-value">—</span>
+        <!-- AI Insights & Metrics Section -->
+        <div id="insights-panel" style="display:none">
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <span class="m-label">DOMAIN</span>
+              <span class="m-value" id="m-domain">—</span>
+            </div>
+            <div class="metric-card">
+              <span class="m-label">LATENCY</span>
+              <span class="m-value" id="m-latency">—ms</span>
+            </div>
+            <div class="metric-card">
+              <span class="m-label">URGENCY</span>
+              <span class="m-value" id="m-urgency">—</span>
+            </div>
+          </div>
+
+          <div class="insight-summary">
+            <h3>&#10024; Pipeline Summary</h3>
+            <p id="insight-text">The Agent Mesh is currently analyzing the input and synthesizing a deterministic response. Results will appear below momentarily.</p>
+          </div>
+
+          <div class="trust-score">
+            <div class="score-header">
+              <span>System Confidence</span>
+              <span id="score-value">0%</span>
+            </div>
+            <div class="score-track">
+              <div id="score-fill" class="score-fill" style="width: 0%"></div>
+            </div>
+          </div>
         </div>
-
-        <!-- Verification flag -->
-        <div id="vflag-container" style="display:none"></div>
-
-        <!-- Missing data warnings -->
-        <ul class="missing-list" id="missing-list" style="display:none"></ul>
 
         <!-- JSON payload -->
         <div id="empty-state">

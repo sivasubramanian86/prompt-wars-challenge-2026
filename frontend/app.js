@@ -85,9 +85,16 @@ async function processGcsSample(gcsUri, label) {
 
   const t0 = Date.now();
   try {
+    const skills = [];
+    if (document.getElementById('skill-security')?.checked) skills.push('security');
+    if (document.getElementById('skill-memory')?.checked) skills.push('memory');
+
     const resp = await fetch('/v1/incident/ingest-gcs', {
       method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'X-Omni-Skills': skills.join(',')
+      },
       body:    JSON.stringify({ gcs_uri: gcsUri }),
     });
 
@@ -360,10 +367,15 @@ async function submitIncident() {
     if (textVal) form.append('text', textVal);  // optional context alongside audio
   }
 
+  const skills = [];
+  if (document.getElementById('skill-security')?.checked) skills.push('security');
+  if (document.getElementById('skill-memory')?.checked) skills.push('memory');
+
   const t0 = Date.now();
   try {
     const resp = await fetch('/v1/incident/ingest', {
       method: 'POST',
+      headers: { 'X-Omni-Skills': skills.join(',') },
       body: form,
     });
 

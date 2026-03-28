@@ -115,8 +115,13 @@ async function processGcsSample(gcsUri, label) {
     
     const emptyState = document.getElementById('empty-state');
     if (emptyState) emptyState.style.display = 'block';
+    
     const jsonOutput = document.getElementById('json-output');
     if (jsonOutput) jsonOutput.style.display = 'none';
+    
+    const insightsPanel = document.getElementById('insights-panel');
+    if (insightsPanel) insightsPanel.style.display = 'none';
+
     
     const defconBar = document.getElementById('defcon-bar');
     if (defconBar) defconBar.style.display = 'none';
@@ -304,6 +309,50 @@ function renderResult(data, latencyMs) {
   document.getElementById('empty-state').style.display = 'none';
   document.getElementById('json-output').style.display = 'block';
 
+  // Show insights panel and populate
+  const insightsPanel = document.getElementById('insights-panel');
+  if (insightsPanel) {
+    insightsPanel.style.display = 'block';
+    
+    // Populate metrics
+    const mDomain = document.getElementById('m-domain');
+    if (mDomain) mDomain.textContent = data.domain_classification || 'UNKNOWN';
+    
+    const mLatency = document.getElementById('m-latency');
+    if (mLatency) mLatency.textContent = latencyMs ? `${latencyMs}ms` : '--ms';
+    
+    const mUrgency = document.getElementById('m-urgency');
+    if (mUrgency) mUrgency.textContent = data.urgency_level || 'UNKNOWN';
+
+    // Populate insight text
+    const insightText = document.getElementById('insight-text');
+    if (insightText) {
+      insightText.textContent = data.synthesized_context || "Pipeline completed successfully.";
+    }
+
+    // Populate system confidence score
+    const scoreValue = document.getElementById('score-value');
+    const scoreFill = document.getElementById('score-fill');
+    if (scoreValue && scoreFill) {
+      let score = 95;
+      if (data.verification_flag === 'PENDING_HITL') score = 75;
+      if (data.verification_flag === 'FAILED') score = 40;
+      const missingItems = data.extracted_entities?.missing_critical_data || [];
+      score -= (missingItems.length * 5);
+      score = Math.max(10, Math.min(100, score));
+      
+      scoreValue.textContent = `${score}%`;
+      scoreFill.style.width = `${score}%`;
+      if (score < 50) {
+        scoreFill.style.background = 'var(--red, #ff4c4c)';
+      } else if (score < 80) {
+        scoreFill.style.background = 'var(--yellow, #ffc800)';
+      } else {
+        scoreFill.style.background = 'var(--cyan, #00d4ff)';
+      }
+    }
+  }
+
   // Incident ID badge
   const shortId = String(data.incident_id).split('-')[0].toUpperCase();
   document.getElementById('incident-id-badge').textContent = `INC-${shortId}`;
@@ -416,8 +465,13 @@ async function submitIncident() {
     setStatus('ERROR', false);
     const emptyState = document.getElementById('empty-state');
     if (emptyState) emptyState.style.display = 'block';
+    
     const jsonOutput = document.getElementById('json-output');
     if (jsonOutput) jsonOutput.style.display = 'none';
+    
+    const insightsPanel = document.getElementById('insights-panel');
+    if (insightsPanel) insightsPanel.style.display = 'none';
+
     
     const defconBar = document.getElementById('defcon-bar');
     if (defconBar) defconBar.style.display = 'none';

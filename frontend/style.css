@@ -624,8 +624,67 @@ footer .latency {
 .gcs-card-type.image { background: rgba(0,212,255,.12);  color: var(--cyan); }
 .gcs-card-type.audio { background: rgba(191,90,242,.12); color: var(--hitl); }
 
-/* ── Scrollbar global ────────────────────────────────────────────────────── */
-
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── AI Insights ─────────────────────────────────────────────────────────── */
+#insights-panel {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 20px;
+}
+.metrics-grid {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+.metric-card {
+  display: flex;
+  flex-direction: column;
+}
+.m-label {
+  font-size: 9px;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+}
+.m-value {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--cyan);
+}
+.insight-summary h3 {
+  font-size: 11px;
+  color: var(--cyan);
+  margin-bottom: 6px;
+}
+#insight-text {
+  font-size: 12px;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.score-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+#score-value {
+  font-family: var(--font-mono);
+  color: var(--cyan);
+}
+.score-track {
+  height: 6px;
+  background: var(--bg-base);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.score-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1s ease, background 0.3s;
+}

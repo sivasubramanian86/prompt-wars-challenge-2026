@@ -19,9 +19,12 @@
 ## 🚀 Key Features
 - **Multimodal (Messy) Ingestion**: Directly consumes Text, Audio, and Image data from GCS URIs.
 - **Agent Mesh Architecture**: Modular orchestration using specialized autonomous agents.
+- **Dynamic Cognitive Skills**: Pluggable middleware framework offering **Security Governance (PII Scrubbing)** and **Memory Management**.
 - **Gemini 2.5 Powered**: High-reasoning crisis extraction and zero-latency triage.
 - **Deterministic Verification**: Hard-coded safety gates to prevent LLM hallucinations.
-- **Front-end Command Center**: Premium glassmorphic UI for real-time monitoring and GCS sample discovery.
+- **Front-end Command Center**: Premium glassmorphic UI for real-time monitoring, GCS sample discovery, and AI Insights.
+- **Google Services Integration**: Includes comprehensive Google Identity Services (SSO Auth) and Google Analytics.
+- **Streamlit HITL Hub**: Separate dashboard to monitor and verify unverified payloads directly from Cloud Pub/Sub.
 
 ---
 
@@ -114,10 +117,12 @@ All samples are accessible one-click via the **GCS Samples** tab in the UI.
 |-------|-----------|
 | AI Model | Google Vertex AI — Gemini 2.0 Flash |
 | Backend | FastAPI + Pydantic v2 (stateless) |
+| Cognitive Skills | Dynamic `SkillRegistry` with Regex/PII and Memory logic |
 | Runtime | Python 3.12 + Uvicorn |
-| Infra | GCP Cloud Run (auto-scaling, HTTPS) |
-| HITL | Google Cloud Pub/Sub (`omnibridge-hitl-queue`) |
-| Auth | GCP Application Default Credentials (no API keys) |
+| Infra | GCP Cloud Run & Kubernetes (GKE) |
+| HITL | Google Cloud Pub/Sub (`omnibridge-hitl-queue`) & Streamlit UI |
+| Auth | Google Identity Services (Frontend) + GCP ADC (Backend) |
+| Analytics | Google Analytics (`gtag.js`) |
 | Frontend | Vanilla HTML/CSS/JS — glassmorphism command-center UI |
 | Container | Multi-stage Docker, non-root user |
 
@@ -196,12 +201,10 @@ Open `http://localhost:8080`.
 
 ---
 
-## Deploy to Cloud Run
+## Deploying to Production
 
+### Option A: Cloud Run (Serverless)
 ```bash
-# One-time setup (APIs, Pub/Sub, IAM)
-bash setup_gcp.sh
-
 # Deploy
 gcloud run deploy omni-bridge-orchestrator \
   --source . \
@@ -210,6 +213,12 @@ gcloud run deploy omni-bridge-orchestrator \
   --service-account omnibridge-sa@prompt-wars-bengaluru-2026.iam.gserviceaccount.com \
   --allow-unauthenticated \
   --quiet
+```
+
+### Option B: Google Kubernetes Engine (GKE)
+```bash
+# Deploy High-Availability Cluster Manifests
+kubectl apply -f k8s/manifests.yaml
 ```
 
 ---

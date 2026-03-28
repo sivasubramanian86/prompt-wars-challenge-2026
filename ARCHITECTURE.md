@@ -7,7 +7,8 @@ The system follows an **Agentic Mesh Architecture** (inspired by ADK principles 
 
 ```mermaid
 graph TD
-    A[Unstructured Input: Text/Audio/Image/GCS] --> B[Orchestrator]
+    A[Unstructured Input: Text/Audio/Image/GCS] --> S[Skill Registry Middleware]
+    S --> B[Orchestrator]
     B --> C[Transcription Agent]
     C --> D[Triage Agent]
     D --> E{Specialist Router}
@@ -18,8 +19,10 @@ graph TD
     F1 & F2 & F3 & F4 --> G[Verification Agent]
     G --> H{Gate}
     H -- Verified --> I[Synthesis Agent]
+    I --> S_Post[Skill Post-Processor]
+    S_Post --> K[Deterministic JSON Payload]
     H -- Unverified --> J[HITL Pub/Sub Queue]
-    I --> K[Deterministic JSON Payload]
+    J --> L[Streamlit Command Center]
 ```
 
 ## 2. The 5-Step Agentic Pipeline
@@ -48,8 +51,14 @@ graph TD
 - **Model**: `gemini-2.5-flash`.
 - **Function**: Assembles a deterministic, schema-validated JSON payload ready for downstream systems.
 
-## 3. Deployment & Infrastructure
-- **Compute**: Google Cloud Run (Stateless, auto-scaling).
-- **Auth**: Application Default Credentials (ADC) with IAM-locked Service Account (`omnibridge-sa`).
+## 3. Cognitive Skill Middleware
+The architecture supports optional, stateless Cognitive Skills (`X-Omni-Skills`) that mutate the execution context dynamically.
+- `SecurityGovernanceSkill`: Real-time PII and PHI regex scrubbing.
+- `MemoryManagementSkill`: Long-term and Short-term context sliding windows.
+
+## 4. Deployment & Infrastructure
+- **Compute**: Google Cloud Run (Serverless) and Google Kubernetes Engine (GKE) (High-Availability).
+- **Auth**: Google Identity Services (SSO frontend) and Application Default Credentials (ADC backend).
 - **Events**: Cloud Pub/Sub for unverified incident escalation.
+- **HITL Resolution**: Streamlit dashboard pulling off `omnibridge-hitl-queue` for manual operator override.
 - **Storage**: GCS-native ingestion for large-scale multimodal data processing.

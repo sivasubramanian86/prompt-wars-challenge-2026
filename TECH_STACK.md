@@ -17,23 +17,26 @@ This project is built using modern, production-grade cloud-native technologies o
 - **Design Pattern**: Autonomous Sequential Agent Mesh (Custom Orchestration).
 
 ## 3. Cloud Infrastructure (GCP)
-- **Compute**: **Google Cloud Run** (Containerized Serverless)
+- **Compute**: 
+  - **Google Cloud Run** (Containerized Serverless)
+  - **Google Kubernetes Engine (GKE)** (High-Availability scaling)
 - **Messaging**: **Cloud Pub/Sub** (Asynchronous Human-in-the-Loop escalation)
-- **Storage**: **Google Cloud Storage (GCS)**
+- **Storage**: **Google Cloud Storage (GCS)** & **Firestore (Memory Module)**
   - GCS-Native Ingestion: `gs://` URIs ingested directly via Vertex AI `Part.from_uri`.
   - Sample Incident Catalogue: Pre-populated synthetic logs and multimodal data.
-- **Authentication**: **Google Cloud IAM**
-  - Application Default Credentials (ADC).
-  - Least-privilege Service Account (`omnibridge-sa`).
+- **Authentication**: 
+  - Google Identity Services (SSO UI Auth).
+  - Application Default Credentials (ADC) for backend.
+- **Analytics**: **Google Analytics (gtag.js)**
 
-## 4. Frontend & Command Center
-- **Architecture**: Single-Page Application (SPA).
-- **Styling**: Vanilla CSS (Custom Glassmorphism Design System).
-- **Logic**: Vanilla Javascript (Functional-reactive pattern).
-- **UI Components**:
-  - Real-time Audio Visualizer (Canvas API).
-  - Pipeline Tracker (DOM state synchronization).
-  - GCS Sample Discovery Agent.
+## 4. Frontend & Command Centers
+- **Primary Orchestrator UI**: Single-Page Application (SPA).
+  - Vanilla CSS (Custom Glassmorphism Design System).
+  - Vanilla Javascript (Functional-reactive pattern).
+  - UI Components: Real-time AI Insights, Pipeline Tracker, GCS Sample Discovery.
+- **HITL Dashboard**: **Streamlit Web Application**
+  - Consumes from Pub/Sub via subscription.
+  - Interactive Python-based dashboard for human verification.
 
 ## 5. DevSecOps & QA
 - **Version Control**: Git (GitHub)

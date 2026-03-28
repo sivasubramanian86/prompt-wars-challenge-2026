@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+.Python
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+service_account*.json
+
+# Logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artefacts
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/

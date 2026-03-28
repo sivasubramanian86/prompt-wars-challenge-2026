@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omni-Bridge Core Orchestrator | Prompt Wars 2026</title>
+  <meta name="description" content="Zero-latency multi-modal crisis data synthesis. Converts unstructured incident data into verified, deterministic execution payloads." />
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ── Header ─────────────────────────────────────────────────────────── -->
+  <header>
+    <div class="logo-ring">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2">
+        <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+        <line x1="12" y1="2" x2="12" y2="22"/>
+        <line x1="2" y1="8.5" x2="22" y2="8.5"/>
+        <line x1="2" y1="15.5" x2="22" y2="15.5"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>Omni-Bridge Core Orchestrator</h1>
+      <p>Multi-modal crisis synthesis &bull; Vertex AI &bull; Prompt Wars Bengaluru 2026</p>
+    </div>
+    <div class="header-right">
+      <div id="status-dot" class="status-dot" title="System Ready"></div>
+      <span id="status-label" style="font-size:11px;color:var(--text-secondary);letter-spacing:.05em">READY</span>
+    </div>
+  </header>
+
+  <!-- ── Main ───────────────────────────────────────────────────────────── -->
+  <main>
+
+    <!-- Left: Input Panel -->
+    <div class="panel" id="input-panel">
+      <div class="panel-header">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <h2>Incident Input</h2>
+        <span class="badge">STEP 1 — INGEST</span>
+      </div>
+      <div class="panel-body">
+
+        <!-- Input mode tabs -->
+        <div class="tabs" role="tablist">
+          <button class="tab-btn active" id="tab-text" role="tab" aria-selected="true" onclick="switchTab('text')">
+            Text / Transcript
+          </button>
+          <button class="tab-btn" id="tab-audio" role="tab" aria-selected="false" onclick="switchTab('audio')">
+            Audio Recording
+          </button>
+          <button class="tab-btn" id="tab-gcs" role="tab" aria-selected="false" onclick="switchTab('gcs')">
+            GCS Samples
+          </button>
+        </div>
+
+        <!-- Text input -->
+        <div id="text-panel">
+          <textarea
+            id="incident-text"
+            placeholder="Paste raw incident data here — medical records, voice transcript, crisis report, sensor data…
+
+Example: 'Patient John D., 45yr male, presenting with chest pain radiating to left arm, BP 180/110, HR 112. History of hypertension. Currently on Lisinopril. Requesting immediate cardiac triage.'"
+            aria-label="Incident text input"
+          ></textarea>
+        </div>
+
+        <!-- Audio input -->
+        <div id="audio-panel">
+          <button class="record-btn" id="record-btn" onclick="toggleRecording()" aria-label="Start recording">
+            <span class="record-icon"></span>
+            <span id="record-label">Click to start recording</span>
+            <span id="record-timer" style="margin-left:auto;font-family:var(--font-mono);font-size:12px;color:var(--text-secondary)">00:00</span>
+          </button>
+          <canvas id="waveform" aria-hidden="true"></canvas>
+          <p id="audio-status">Microphone access required for audio recording.</p>
+        </div>
+
+        <!-- GCS samples panel -->
+        <div id="gcs-panel" style="display:none">
+          <div id="gcs-loading" style="text-align:center;padding:20px;color:var(--text-secondary);font-size:12px">Loading sample catalogue…</div>
+          <div id="gcs-grid" class="gcs-grid"></div>
+          <p style="font-size:11px;color:var(--text-secondary);margin-top:8px">
+            Click any sample to immediately process it through the pipeline.
+          </p>
+        </div>
+
+        <!-- Submit -->
+        <button id="submit-btn" onclick="submitIncident()" aria-label="Process incident">
+          <span id="submit-label">&#9654; PROCESS INCIDENT</span>
+        </button>
+
+        <!-- Pipeline step tracker -->
+        <div class="pipeline-steps" id="pipeline-steps" aria-label="Pipeline progress" role="status">
+          <div class="step" id="step-0">
+            <div class="step-dot" id="dot-0">01</div>
+            <span class="step-label">Modality<br>Triage</span>
+          </div>
+          <div class="step" id="step-1">
+            <div class="step-dot" id="dot-1">02</div>
+            <span class="step-label">Intent<br>Urgency</span>
+          </div>
+          <div class="step" id="step-2">
+            <div class="step-dot" id="dot-2">03</div>
+            <span class="step-label">Domain<br>Routing</span>
+          </div>
+          <div class="step" id="step-3">
+            <div class="step-dot" id="dot-3">04</div>
+            <span class="step-label">Verify<br>Ground</span>
+          </div>
+          <div class="step" id="step-4">
+            <div class="step-dot" id="dot-4">05</div>
+            <span class="step-label">Action<br>Synthesis</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Right: Output Panel -->
+    <div class="panel" id="output-panel">
+      <div class="panel-header">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <h2>Execution Payload</h2>
+        <span class="badge" id="incident-id-badge">AWAITING INPUT</span>
+      </div>
+      <div class="panel-body">
+
+        <!-- DEFCON indicator (hidden until result) -->
+        <div class="defcon-bar" id="defcon-bar" data-level="" style="display:none">
+          <div class="defcon-dot"></div>
+          <span class="defcon-label">URGENCY LEVEL</span>
+          <span class="defcon-value" id="defcon-value">—</span>
+        </div>
+
+        <!-- Verification flag -->
+        <div id="vflag-container" style="display:none"></div>
+
+        <!-- Missing data warnings -->
+        <ul class="missing-list" id="missing-list" style="display:none"></ul>
+
+        <!-- JSON payload -->
+        <div id="empty-state">
+          <div class="empty-icon">&#9636;</div>
+          <p>Submit an incident to generate a<br>verified execution payload.</p>
+        </div>
+        <pre id="json-output" style="display:none" aria-live="polite" aria-label="Execution payload JSON"></pre>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="brand">
+      <span>OMNI-BRIDGE v1.0</span>
+      <span style="color:var(--border)">|</span>
+      <span>GCP Vertex AI &bull; Cloud Pub/Sub &bull; Cloud Run</span>
+    </div>
+    <span class="latency" id="footer-latency"></span>
+  </footer>
+
+</div>
+
+<script src="/assets/app.js"></script>
+</body>
+</html>

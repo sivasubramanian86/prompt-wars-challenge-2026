@@ -1,0 +1,41 @@
+*** URGENT - INDUSTRIAL INCIDENT REPORT - PEENYA INDUSTRIAL AREA ***
+
+Reported by: Security Guard (Badge #: PIA-047)  
+Time of first report: 14:23 hrs IST  
+Building: Factory Block C4, Peenya Industrial Estate, Phase 2 Bangalore 560058
+
+== INCIDENT DESCRIPTION (as narrated) ==
+
+Strong ammonia smell first noticed by shift workers at approx 2 PM in sector C
+Fire alarm triggered automatically at 14:17
+Evacuation commenced but INCOMPLETE -- confirmed approx 23 employees still
+inside building as of 14:23 -- exact floor locations unknown
+Some workers went to roof as per old evacuation signage (signage is outdated)
+
+Facility: Chemical storage + processing, stores: ammonia (refrigerant grade),
+sulphuric acid (drums in C3 adjacent), chlorine cylinders (qty unknown to caller)
+
+Wind direction: North-East (confirmed by caller looking at smoke from chimney)
+Wind speed: moderate
+
+NEARBY SENSITIVE LOCATIONS:
+- St. Johns CBSE School: approx 400m south-east 
+- Greenfield Academy: approx 520m south -- school hours still in session
+- Peenya Metro Station: 600m (crowded at this hour)
+- Residential buildings: 200m east (approx 3 apartment blocks, unknown occupancy)
+
+Caller is not sure if this is a pipe rupture or a storage tank failure
+No fire visible yet, but thick yellowish haze reported near loading dock
+
+Plant safety officer UNREACHABLE -- on leave
+Plant manager contact: [number illegible on form]
+
+Emergency gate opened? Uncertain.
+CCTV operational? Unknown.
+
+Hazmat checklist: INCOMPLETE (only first page filled)
+
+[Handwritten additions in different pen:]
+"2nd call at 1431 -- 3 workers now showing symptoms: eye irritation, 
+coughing. One unconscious allegedly. Need HAZMAT + Fire + Ambulance ASAP.
+Do NOT enter without SCBA. Area may still be active leak."

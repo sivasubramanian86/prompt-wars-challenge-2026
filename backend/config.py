@@ -7,8 +7,8 @@ class Settings(BaseSettings):
     gcp_location: str = "us-central1"
     pubsub_topic_hitl: str = "omnibridge-hitl-queue"
     # Vertex AI model IDs
-    triage_model: str = "gemini-2.0-flash-001"
-    synthesis_model: str = "gemini-2.0-flash-001"
+    triage_model: str = "gemini-2.0-flash"
+    synthesis_model: str = "gemini-2.0-flash"
     environment: str = "production"
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}

@@ -487,35 +487,6 @@ async function submitIncident() {
   }
 }
 
-/* ── Authentication Handlers (Google Identity Services) ────────────────────────── */
-function parseJwt(token) {
-  try {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => 
-      '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
-    return JSON.parse(jsonPayload);
-  } catch (e) {
-    return null;
-  }
-}
-
-window.handleCredentialResponse = function(response) {
-  const jwt = parseJwt(response.credential);
-  if (jwt && jwt.name) {
-    const signinDiv = document.querySelector('.g_id_signin');
-    if (signinDiv) signinDiv.style.display = 'none';
-
-    document.getElementById('status-label').textContent = `AUTHED: ${jwt.name.toUpperCase()}`;
-    document.getElementById('status-dot').style.background = 'var(--cyan)';
-    document.getElementById('status-dot').style.boxShadow = '0 0 10px var(--cyan)';
-    
-    // Log auth event to analytics
-    if (typeof gtag === 'function') {
-      gtag('event', 'login', { method: 'Google' });
-    }
-  }
-};
 
 /* ── Init ─────────────────────────────────────────────────────────────────── */
 (function init() {

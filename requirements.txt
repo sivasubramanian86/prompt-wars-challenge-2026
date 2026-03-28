@@ -9,3 +9,5 @@ python-multipart
 httpx
 streamlit
 regex
+
+google-cloud-firestore>=2.11.1

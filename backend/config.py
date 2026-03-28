@@ -8,8 +8,9 @@ class Settings(BaseSettings):
     pubsub_topic_hitl: str = "omnibridge-hitl-queue"
     # Vertex AI model IDs — gemini-1.5-flash is GA on all projects.
     # Run list_available_models.py to check if gemini-2.0-flash is accessible.
-    triage_model: str = "gemini-1.5-flash"
-    synthesis_model: str = "gemini-1.5-flash"
+    # Vertex AI model IDs — verified available for this project via probe.
+    triage_model: str = "gemini-2.5-flash-lite"
+    synthesis_model: str = "gemini-2.5-flash"
     environment: str = "production"
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}

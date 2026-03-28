@@ -199,7 +199,7 @@ class OmniBridgePipeline:
 
     # ── Step 0: Audio transcription ────────────────────────────────────────────
     def _transcribe_audio(self, audio_bytes: bytes, mime_type: str) -> str:
-        model = GenerativeModel("gemini-1.5-flash")
+        model = GenerativeModel("gemini-2.5-flash")
         audio_part = Part.from_data(data=audio_bytes, mime_type=mime_type)
         response = model.generate_content(
             [

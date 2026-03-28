@@ -10,6 +10,19 @@
 
 **Live URL:** `https://omni-bridge-orchestrator-448512759847.us-central1.run.app`
 
+## 📖 Project Documentation
+- [System Architecture](ARCHITECTURE.md) — 5-Step Agent Mesh & Pipeline Design.
+- [Technology Stack](TECH_STACK.md) — Gemini 2.5, Cloud Run, FastAPI, and more.
+- [Security Policy](SECURITY.md) — IAM, PII handling, and hardening.
+- [License](LICENSE) — Apache 2.0.
+
+## 🚀 Key Features
+- **Multimodal (Messy) Ingestion**: Directly consumes Text, Audio, and Image data from GCS URIs.
+- **Agent Mesh Architecture**: Modular orchestration using specialized autonomous agents.
+- **Gemini 2.5 Powered**: High-reasoning crisis extraction and zero-latency triage.
+- **Deterministic Verification**: Hard-coded safety gates to prevent LLM hallucinations.
+- **Front-end Command Center**: Premium glassmorphic UI for real-time monitoring and GCS sample discovery.
+
 ---
 
 ## The Problem

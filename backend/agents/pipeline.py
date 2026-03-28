@@ -14,6 +14,7 @@ from backend.agents.crisis import CrisisAgent
 from backend.agents.general import GeneralAgent
 from backend.agents.verify import VerificationAgent
 from backend.agents.synthesis import SynthesisAgent
+from backend.tools.gcs_ingest import resolve_gcs_uri
 
 logger = logging.getLogger("omnibridge.pipeline")
 
@@ -101,6 +102,18 @@ class OmniBridgePipeline:
             self._publish_to_hitl(final_payload)
             
         return final_payload
+
+    async def run_from_gcs(self, gcs_uri: str):
+        """Handy entrypoint for GCS-native ingestion."""
+        logger.info(f"Step 0: Resolving GCS URI [{gcs_uri}]...")
+        resolved = resolve_gcs_uri(gcs_uri)
+        
+        return await self.run(
+            text_input=resolved.raw_text,
+            audio_bytes=resolved.audio_bytes,
+            audio_mime=resolved.audio_mime,
+            image_part=resolved.image_part
+        )
 
     def _publish_to_hitl(self, payload):
         """Publishes the unverified payload to the Human-in-the-loop Pub/Sub topic."""

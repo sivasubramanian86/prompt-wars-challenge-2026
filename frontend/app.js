@@ -29,13 +29,90 @@ let pipelineTimer = null;
 /* ── Tab switching ────────────────────────────────────────────────────────── */
 function switchTab(tab) {
   activeTab = tab;
-  document.getElementById('tab-text').classList.toggle('active', tab === 'text');
-  document.getElementById('tab-audio').classList.toggle('active', tab === 'audio');
-  document.getElementById('text-panel').style.display = tab === 'text' ? 'block' : 'none';
+  ['text', 'audio', 'gcs'].forEach(t => {
+    const btn = document.getElementById(`tab-${t}`);
+    if (btn) {
+      btn.classList.toggle('active', t === tab);
+      btn.setAttribute('aria-selected', t === tab);
+    }
+  });
+  document.getElementById('text-panel').style.display  = tab === 'text'  ? 'block' : 'none';
   document.getElementById('audio-panel').style.display = tab === 'audio' ? 'block' : 'none';
-  document.getElementById('tab-text').setAttribute('aria-selected', tab === 'text');
-  document.getElementById('tab-audio').setAttribute('aria-selected', tab === 'audio');
+  document.getElementById('gcs-panel').style.display   = tab === 'gcs'   ? 'block' : 'none';
+
+  // Lazy-load the sample catalogue the first time
+  if (tab === 'gcs' && !window._gcsSamplesLoaded) loadGcsSamples();
 }
+
+/* ── GCS sample catalogue ─────────────────────────────────────────────────── */
+async function loadGcsSamples() {
+  const grid    = document.getElementById('gcs-grid');
+  const loading = document.getElementById('gcs-loading');
+  try {
+    const resp  = await fetch('/v1/samples');
+    const data  = await resp.json();
+    window._gcsSamplesLoaded = true;
+
+    loading.style.display = 'none';
+    grid.innerHTML = data.samples.map(s => `
+      <div class="gcs-card" data-domain="${s.domain}" data-uri="${s.uri}"
+           onclick="processGcsSample('${s.uri}', '${s.label}')"
+           title="${s.uri}">
+        <div class="gcs-card-label">${s.label}</div>
+        <div class="gcs-card-meta">
+          <span class="gcs-card-type ${s.type}">${s.type}</span>
+        </div>
+      </div>
+    `).join('');
+  } catch (err) {
+    loading.textContent = `Failed to load samples: ${err.message}`;
+  }
+}
+
+async function processGcsSample(gcsUri, label) {
+  resetSteps();
+  const stepCtrl = animatePipeline();
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  document.getElementById('submit-label').textContent = '⏳ PROCESSING…';
+  setStatus('PROCESSING', true);
+
+  // Highlight selected card
+  document.querySelectorAll('.gcs-card').forEach(c => c.style.outline = 'none');
+  const selected = document.querySelector(`.gcs-card[data-uri="${gcsUri}"]`);
+  if (selected) selected.style.outline = '1px solid var(--cyan)';
+
+  const t0 = Date.now();
+  try {
+    const resp = await fetch('/v1/incident/ingest-gcs', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ gcs_uri: gcsUri }),
+    });
+
+    const latencyMs = Date.now() - t0;
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({ detail: resp.statusText }));
+      throw new Error(err.detail || `HTTP ${resp.status}`);
+    }
+
+    const data = await resp.json();
+    const hasWarning = data.verification_flag !== 'PASS';
+    stepCtrl.finish(hasWarning);
+    renderResult(data, latencyMs);
+    setStatus('READY', false);
+  } catch (err) {
+    stepCtrl.error();
+    setStatus('ERROR', false);
+    alert(`GCS pipeline error: ${err.message}`);
+  } finally {
+    btn.disabled = false;
+    document.getElementById('submit-label').textContent = '▶ PROCESS INCIDENT';
+    document.querySelectorAll('.gcs-card').forEach(c => c.style.outline = 'none');
+  }
+}
+
 
 /* ── Audio recording ──────────────────────────────────────────────────────── */
 async function toggleRecording() {

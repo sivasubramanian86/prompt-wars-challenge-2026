@@ -532,7 +532,72 @@ footer .latency {
   color: var(--cyan);
 }
 
+/* ── GCS Samples Grid ────────────────────────────────────────────────────── */
+.gcs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.gcs-card {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  overflow: hidden;
+}
+.gcs-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  border-radius: 3px 0 0 3px;
+}
+.gcs-card[data-domain="Medical"]::before          { background: var(--critical); }
+.gcs-card[data-domain="Traffic"]::before          { background: var(--high); }
+.gcs-card[data-domain="Crisis_Response"]::before  { background: var(--hitl); }
+.gcs-card[data-domain="Weather"]::before          { background: var(--cyan); }
+.gcs-card[data-domain="General"]::before          { background: var(--low); }
+
+.gcs-card:hover {
+  border-color: var(--border-glow);
+  background: rgba(0, 212, 255, 0.06);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,0,0,.4);
+}
+.gcs-card-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding-left: 6px;
+  line-height: 1.3;
+}
+.gcs-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 6px;
+}
+.gcs-card-type {
+  font-size: 9px;
+  font-family: var(--font-mono);
+  padding: 1px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.gcs-card-type.text  { background: rgba(48,209,88,.12); color: var(--low); }
+.gcs-card-type.image { background: rgba(0,212,255,.12);  color: var(--cyan); }
+.gcs-card-type.audio { background: rgba(191,90,242,.12); color: var(--hitl); }
+
 /* ── Scrollbar global ────────────────────────────────────────────────────── */
+
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }

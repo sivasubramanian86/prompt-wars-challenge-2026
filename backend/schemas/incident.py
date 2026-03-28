@@ -20,9 +20,9 @@ class UrgencyLevel(str, Enum):
 
 
 class VerificationFlag(str, Enum):
-    PASS_ = "PASS"
-    FAIL = "FAIL"
-    HUMAN_IN_LOOP = "REQUIRES_HUMAN_IN-THE-LOOP"
+    VERIFIED = "VERIFIED"
+    FAILED = "FAILED"
+    PENDING_HITL = "PENDING_HITL"
 
 
 class ExtractedEntities(BaseModel):

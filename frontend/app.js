@@ -112,6 +112,19 @@ async function processGcsSample(gcsUri, label) {
   } catch (err) {
     stepCtrl.error();
     setStatus('ERROR', false);
+    
+    const emptyState = document.getElementById('empty-state');
+    if (emptyState) emptyState.style.display = 'block';
+    const jsonOutput = document.getElementById('json-output');
+    if (jsonOutput) jsonOutput.style.display = 'none';
+    
+    const defconBar = document.getElementById('defcon-bar');
+    if (defconBar) defconBar.style.display = 'none';
+    const vflagContainer = document.getElementById('vflag-container');
+    if (vflagContainer) vflagContainer.style.display = 'none';
+    const missingList = document.getElementById('missing-list');
+    if (missingList) missingList.style.display = 'none';
+
     alert(`GCS pipeline error: ${err.message}`);
   } finally {
     btn.disabled = false;
@@ -297,28 +310,35 @@ function renderResult(data, latencyMs) {
 
   // DEFCON bar
   const defcon = document.getElementById('defcon-bar');
-  defcon.style.display = 'flex';
-  defcon.setAttribute('data-level', data.urgency_level);
-  document.getElementById('defcon-value').textContent = data.urgency_level;
+  if (defcon) {
+    defcon.style.display = 'flex';
+    defcon.setAttribute('data-level', data.urgency_level);
+  }
+  const defconVal = document.getElementById('defcon-value');
+  if (defconVal) defconVal.textContent = data.urgency_level;
 
   // Verification flag
   const vContainer = document.getElementById('vflag-container');
-  vContainer.style.display = 'block';
-  const flag = data.verification_flag;
-  const cls = flag === 'PASS' ? 'pass' : flag.includes('HUMAN') ? 'hitl' : 'fail';
-  const icon = flag === 'PASS' ? '✓' : flag.includes('HUMAN') ? '⚡' : '✕';
-  vContainer.innerHTML = `<div class="vflag ${cls}"><span class="vflag-icon">${icon}</span>${flag}</div>`;
+  if (vContainer) {
+    vContainer.style.display = 'block';
+    const flag = data.verification_flag;
+    const cls = flag === 'PASS' ? 'pass' : (typeof flag === 'string' && flag.includes('HUMAN')) ? 'hitl' : 'fail';
+    const icon = flag === 'PASS' ? '✓' : (typeof flag === 'string' && flag.includes('HUMAN')) ? '⚡' : '✕';
+    vContainer.innerHTML = `<div class="vflag ${cls}"><span class="vflag-icon">${icon}</span>${flag}</div>`;
+  }
 
   // Missing data warnings
   const missing = data.extracted_entities?.missing_critical_data || [];
   const missingList = document.getElementById('missing-list');
-  if (missing.length > 0) {
-    missingList.style.display = 'flex';
-    missingList.innerHTML = missing
-      .map(m => `<li>&#9650; ${m.replace(/_/g, ' ').toUpperCase()}</li>`)
-      .join('');
-  } else {
-    missingList.style.display = 'none';
+  if (missingList) {
+    if (missing.length > 0) {
+      missingList.style.display = 'flex';
+      missingList.innerHTML = missing
+        .map(m => `<li>&#9650; ${m.replace(/_/g, ' ').toUpperCase()}</li>`)
+        .join('');
+    } else {
+      missingList.style.display = 'none';
+    }
   }
 
   // JSON viewer
@@ -394,11 +414,18 @@ async function submitIncident() {
   } catch (err) {
     stepCtrl.error();
     setStatus('ERROR', false);
-    document.getElementById('empty-state').style.display = 'block';
-    document.getElementById('json-output').style.display = 'none';
-    document.getElementById('defcon-bar').style.display = 'none';
-    document.getElementById('vflag-container').style.display = 'none';
-    document.getElementById('missing-list').style.display = 'none';
+    const emptyState = document.getElementById('empty-state');
+    if (emptyState) emptyState.style.display = 'block';
+    const jsonOutput = document.getElementById('json-output');
+    if (jsonOutput) jsonOutput.style.display = 'none';
+    
+    const defconBar = document.getElementById('defcon-bar');
+    if (defconBar) defconBar.style.display = 'none';
+    const vflagContainer = document.getElementById('vflag-container');
+    if (vflagContainer) vflagContainer.style.display = 'none';
+    const missingList = document.getElementById('missing-list');
+    if (missingList) missingList.style.display = 'none';
+
     alert(`Pipeline error: ${err.message}`);
   } finally {
     btn.disabled = false;

@@ -6,7 +6,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Cloud Run](https://img.shields.io/badge/Cloud%20Run-Live-green)](https://omni-bridge-orchestrator-448512759847.us-central1.run.app)
-[![Vertex AI](https://img.shields.io/badge/Powered%20by-Vertex%20AI%20Gemini%202.0-orange)](https://cloud.google.com/vertex-ai)
+[![Vertex AI](https://img.shields.io/badge/Powered%20by-Vertex%20AI%20Gemini%202.5-blueviolet)](https://cloud.google.com/vertex-ai)
 
 **Live URL:** `https://omni-bridge-orchestrator-448512759847.us-central1.run.app`
 
@@ -36,14 +36,16 @@ Omni-Bridge bridges that gap deterministically. It ingests **any modality** of m
              │
 ┌────────────▼────────────────────────────────────────┐
 │          Omni-Bridge Pipeline (Vertex AI)           │
+│           Powered by Gemini 2.5 Flash               │
 │                                                     │
 │  Step 1: Modality Triage + Intent/Urgency           │
+│          (Gemini 2.5-flash-lite)                    │
 │          ├── Text → direct                          │
-│          ├── Audio → Gemini multimodal transcribe   │
-│          └── Image → Part.from_uri (GCS-native)     │
+│          ├── Audio → transcription pipeline         │
+│          └── Image → Part.from_uri                  │
 │                                                     │
 │  Step 2: Domain Specialist Routing                  │
-│          ├── Medical_Triage_Agent                   │
+│          (Gemini 2.5-flash)                         │
 │          ├── Civic_Emergency_Agent (Traffic)        │
 │          ├── Civic_Emergency_Agent (Weather/Crisis) │
 │          └── General_Triage_Agent                   │

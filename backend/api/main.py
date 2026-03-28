@@ -172,14 +172,14 @@ async def ingest_from_gcs(request: Request, body: GCSIngestRequest):
 # ── Sample catalogue ───────────────────────────────────────────────────────────────
 GCS_BUCKET = "omnibridge-samples-pwb2026"
 SAMPLE_FILES = [
-    {"uri": f"gs://{GCS_BUCKET}/01_medical_er_voice_transcript.txt",  "label": "Medical ER — Voice Transcript",     "type": "text",  "domain": "Medical"},
-    {"uri": f"gs://{GCS_BUCKET}/02_traffic_accident_radio_log.txt",   "label": "Traffic — Radio Log (Garbled)",      "type": "text",  "domain": "Traffic"},
-    {"uri": f"gs://{GCS_BUCKET}/03_hazmat_crisis_field_report.txt",   "label": "Crisis — Hazmat Field Report",       "type": "text",  "domain": "Crisis_Response"},
-    {"uri": f"gs://{GCS_BUCKET}/04_weather_flood_email_chain.txt",    "label": "Weather — Flood Email Chain",        "type": "text",  "domain": "Weather"},
-    {"uri": f"gs://{GCS_BUCKET}/05_whatsapp_fire_crisis_chat.txt",    "label": "Crisis — WhatsApp Chat Log",         "type": "text",  "domain": "Crisis_Response"},
-    {"uri": f"gs://{GCS_BUCKET}/messy_medical_form.png",              "label": "Image — Messy Medical Triage Form",  "type": "image", "domain": "Medical"},
-    {"uri": f"gs://{GCS_BUCKET}/traffic_accident_scene.png",          "label": "Image — Traffic Accident (Dashcam)", "type": "image", "domain": "Traffic"},
-    {"uri": f"gs://{GCS_BUCKET}/hazmat_control_room.png",             "label": "Image — Hazmat Control Room",        "type": "image", "domain": "Crisis_Response"},
+    {"uri": f"gs://{GCS_BUCKET}/samples/01_medical_er_voice_transcript.txt",  "label": "Medical ER — Voice Transcript",     "type": "text",  "domain": "Medical"},
+    {"uri": f"gs://{GCS_BUCKET}/samples/02_traffic_accident_radio_log.txt",   "label": "Traffic — Radio Log (Garbled)",      "type": "text",  "domain": "Traffic"},
+    {"uri": f"gs://{GCS_BUCKET}/samples/03_hazmat_crisis_field_report.txt",   "label": "Crisis — Hazmat Field Report",       "type": "text",  "domain": "Crisis_Response"},
+    {"uri": f"gs://{GCS_BUCKET}/samples/04_weather_flood_email_chain.txt",    "label": "Weather — Flood Email Chain",        "type": "text",  "domain": "Weather"},
+    {"uri": f"gs://{GCS_BUCKET}/samples/05_whatsapp_fire_crisis_chat.txt",    "label": "Crisis — WhatsApp Chat Log",         "type": "text",  "domain": "Crisis_Response"},
+    {"uri": f"gs://{GCS_BUCKET}/messy_medical_form.png",                      "label": "Image — Messy Medical Triage Form",  "type": "image", "domain": "Medical"},
+    {"uri": f"gs://{GCS_BUCKET}/traffic_accident_scene.png",                  "label": "Image — Traffic Accident (Dashcam)", "type": "image", "domain": "Traffic"},
+    {"uri": f"gs://{GCS_BUCKET}/hazmat_control_room.png",                     "label": "Image — Hazmat Control Room",        "type": "image", "domain": "Crisis_Response"},
 ]
 
 

@@ -3,7 +3,7 @@ from backend.agents.pipeline import OmniBridgePipeline
 from backend.schemas.incident import IncidentExecutionPayload, VerificationFlag
 
 @pytest.mark.asyncio
-async def test_pipeline_smoke_medical():
+async def test_pipeline_smoke_medical(init_vertex):
     """Smoke test to verify the orchestrated pipeline handles medical text input."""
     pipeline = OmniBridgePipeline()
     raw_text = "Patient John Doe, 45, reported chest pain. Allergic to aspirin. Needs urgent EMS."
@@ -16,7 +16,7 @@ async def test_pipeline_smoke_medical():
     assert "John Doe" in str(result.extracted_entities)
 
 @pytest.mark.asyncio
-async def test_pipeline_smoke_traffic():
+async def test_pipeline_smoke_traffic(init_vertex):
     """Smoke test for traffic incident orchestration."""
     pipeline = OmniBridgePipeline()
     raw_text = "Multi-car pileup at the intersection of Main and 5th. No injuries reported, but gridlock is severe."

@@ -4,10 +4,6 @@ from backend.agents.synthesis import SynthesisAgent
 from backend.schemas.incident import IncidentExecutionPayload, VerificationFlag
 from backend.config import get_settings
 
-@pytest.fixture(scope="module")
-def init_vertex():
-    settings = get_settings()
-    vertexai.init(project=settings.gcp_project_id, location=settings.gcp_location)
 
 @pytest.mark.asyncio
 async def test_synthesis_payload_construction(init_vertex):

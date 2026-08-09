@@ -3,10 +3,6 @@ import vertexai
 from backend.agents.medical import MedicalAgent
 from backend.config import get_settings
 
-@pytest.fixture(scope="module")
-def init_vertex():
-    settings = get_settings()
-    vertexai.init(project=settings.gcp_project_id, location=settings.gcp_location)
 
 @pytest.mark.asyncio
 async def test_medical_specialist_extraction(init_vertex):

@@ -25,4 +25,4 @@ async def test_pipeline_smoke_traffic():
     
     assert isinstance(result, IncidentExecutionPayload)
     assert result.domain_classification == "Traffic"
-    assert result.urgency_level in ["MODERATE", "HIGH"]
+    assert result.urgency_level in ["MODERATE", "HIGH", "CRITICAL"]

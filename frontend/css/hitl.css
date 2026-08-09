@@ -1,0 +1,31 @@
+/* ── HITL Pub/Sub Escalation Queue Styles ────────────────────────────────── */
+.hitl-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--purple-dim);
+  border: 1px solid rgba(191,90,242,0.3);
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.banner-icon { font-size: 28px; }
+.hitl-banner h3 { font-size: 14px; color: var(--hitl); margin-bottom: 2px; }
+.hitl-banner p { font-size: 12px; color: var(--text-primary); }
+
+.hitl-queue-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.hitl-stat {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.stat-num { font-size: 24px; font-weight: 700; color: var(--cyan); }
+.stat-lbl { font-size: 11px; color: var(--text-secondary); }

@@ -184,7 +184,7 @@ async def ingest_from_gcs(request: Request, body: GCSIngestRequest):
 
 
 # ── Sample catalogue ───────────────────────────────────────────────────────────────
-GCS_BUCKET = "omnibridge-samples-pwb2026"
+GCS_BUCKET = "omnibridge-samples-genai-apac"
 SAMPLE_FILES = [
     {"uri": f"gs://{GCS_BUCKET}/samples/01_medical_er_voice_transcript.txt",  "label": "Medical ER — Voice Transcript",     "type": "text",  "domain": "Medical"},
     {"uri": f"gs://{GCS_BUCKET}/samples/02_traffic_accident_radio_log.txt",   "label": "Traffic — Radio Log (Garbled)",      "type": "text",  "domain": "Traffic"},
@@ -199,7 +199,21 @@ SAMPLE_FILES = [
 
 @app.get("/v1/samples", tags=["orchestration"], summary="List available GCS sample incident files.")
 async def list_samples():
-    return {"bucket": GCS_BUCKET, "samples": SAMPLE_FILES}
+    samples_dir = os.path.join(os.path.dirname(__file__), "..", "..", "samples")
+    enhanced_samples = []
+    for s in SAMPLE_FILES:
+        sample_item = dict(s)
+        if s["type"] == "text":
+            fname = os.path.basename(s["uri"])
+            lpath = os.path.join(samples_dir, fname)
+            if os.path.exists(lpath):
+                try:
+                    with open(lpath, "r", encoding="utf-8") as f:
+                        sample_item["content_preview"] = f.read()
+                except Exception:
+                    sample_item["content_preview"] = ""
+        enhanced_samples.append(sample_item)
+    return {"bucket": GCS_BUCKET, "samples": enhanced_samples}
 
 
 # ── Frontend static serving ────────────────────────────────────────────────────

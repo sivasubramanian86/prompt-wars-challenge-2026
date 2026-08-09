@@ -3,7 +3,7 @@ from functools import lru_cache
 
 
 class Settings(BaseSettings):
-    gcp_project_id: str = "prompt-wars-bengaluru-2026"
+    gcp_project_id: str = "genai-apac-2026-491004"
     gcp_location: str = "us-central1"
     pubsub_topic_hitl: str = "omnibridge-hitl-queue"
     # Vertex AI model IDs — gemini-1.5-flash is GA on all projects.

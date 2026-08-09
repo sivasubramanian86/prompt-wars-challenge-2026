@@ -5,10 +5,10 @@
 > Zero-latency multi-modal crisis orchestration. Converts unstructured incident data — voice transcripts, scanned forms, dashcam images, sensor dumps, WhatsApp chats — into verified, deterministic JSON execution payloads via a 5-step Vertex AI agent pipeline.
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Cloud Run](https://img.shields.io/badge/Cloud%20Run-Live-green)](https://omni-bridge-orchestrator-448512759847.us-central1.run.app)
+[![Cloud Run](https://img.shields.io/badge/Cloud%20Run-Live-green)](https://omnibridge-ai-967518492968.us-central1.run.app)
 [![Vertex AI](https://img.shields.io/badge/Powered%20by-Vertex%20AI%20Gemini%202.5-blueviolet)](https://cloud.google.com/vertex-ai)
 
-**Live URL:** `https://omni-bridge-orchestrator-448512759847.us-central1.run.app`
+**Live URL:** `https://omnibridge-ai-967518492968.us-central1.run.app`
 
 ## 📖 Project Documentation
 - [System Architecture](ARCHITECTURE.md) — 5-Step Agent Mesh & Pipeline Design.
@@ -250,7 +250,8 @@ PII handling, container hardening, and responsible disclosure contacts.
 │   └── app.js                 # Audio recorder, GCS tab, JSON viewer
 ├── samples/                   # Synthetic messy incident data
 ├── Dockerfile                 # Multi-stage, non-root production image
-├── setup_gcp.sh               # One-time GCP infra setup script
+├── scripts/
+│   └── setup_gcp.sh           # One-time GCP infra setup script
 ├── requirements.txt
 ├── LICENSE
 └── SECURITY.md

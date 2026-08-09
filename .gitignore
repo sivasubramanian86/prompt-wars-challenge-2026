@@ -37,3 +37,11 @@ build/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Demo & Voiceover files (Do not commit to remote)
+DEMO_SCRIPT.md
+scripts/generate_voiceover.py
+omni_bridge_voiceover.mp3
+*.mp3
+demo_assets/
+

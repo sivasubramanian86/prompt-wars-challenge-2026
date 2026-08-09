@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # setup_gcp.sh — One-time GCP project configuration for Omni-Bridge
 # Run this ONCE before the first Cloud Run deploy.
-# Usage: bash setup_gcp.sh
+# Usage: bash scripts/setup_gcp.sh
 
 set -euo pipefail
 
-PROJECT_ID="prompt-wars-bengaluru-2026"
+PROJECT_ID="genai-apac-2026-491004"
 REGION="us-central1"
 TOPIC="omnibridge-hitl-queue"
 SUBSCRIPTION="omnibridge-hitl-sub"

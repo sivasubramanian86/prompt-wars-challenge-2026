@@ -1,0 +1,15 @@
+# Gitleaks Configuration for Omni-Bridge Core Orchestrator
+title = "Gitleaks Config"
+
+[allowlist]
+description = "Global allowlist"
+paths = [
+  '''gitleaks.toml''',
+  '''pytest.ini''',
+  '''README.md''',
+  '''ARCHITECTURE.md'''
+]
+regexes = [
+  '''448512759847''', # GCP project number
+  '''genai-apac-2026-491004''' # GCP project ID
+]

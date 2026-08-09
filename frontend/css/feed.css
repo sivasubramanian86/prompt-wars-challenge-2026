@@ -1,0 +1,26 @@
+/* ── Live Incident Feed Styles ────────────────────────────────────────────── */
+.feed-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 12px;
+}
+.feed-table th {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+.feed-table td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(0,212,255,0.08);
+  color: var(--text-primary);
+}
+.empty-table {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 30px !important;
+}
